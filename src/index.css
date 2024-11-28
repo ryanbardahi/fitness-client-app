@@ -1,13 +1,258 @@
+/* General Styles */
 body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Authentication Container */
+.auth-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.auth-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #343a40;
+}
+
+.auth-container form .form-control {
+  margin-bottom: 15px;
+}
+
+.auth-container form button {
+  width: 100%;
+}
+
+.auth-container p {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.auth-container a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.auth-container a:hover {
+  text-decoration: underline;
+}
+
+/* Workouts Container */
+.workouts-container {
+  width: 95%;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.workouts-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #343a40;
+}
+
+.workouts-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.workouts-header button {
+  padding: 10px 20px;
+}
+
+.workouts-header button:first-child {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.workouts-header button:last-child {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.workouts-header button:hover {
+  opacity: 0.9;
+}
+
+/* Workouts List */
+.workouts-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Workout Card */
+.workout-card {
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #dee2e6;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.workout-card:hover {
+  transform: translateY(-5px);
+}
+
+.workout-card h3 {
+  margin-top: 0;
+  color: #343a40;
+}
+
+.workout-card p {
+  margin: 8px 0;
+  color: #6c757d;
+}
+
+.workout-card-buttons {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 15px;
+}
+
+.workout-card-buttons button {
+  padding: 6px 12px;
+  margin-right: 5px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: opacity 0.3s ease;
+}
+
+.workout-card-buttons button.mark-complete {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.workout-card-buttons button.edit {
+  background-color: #ffc107; /* Yellow color for edit */
+  color: #fff;
+}
+
+.workout-card-buttons button.delete {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.workout-card-buttons button:hover {
+  opacity: 0.9;
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050; /* Higher than Bootstrap's modal z-index */
+}
+
+.modal-content {
+  width: 90%;
+  max-width: 500px;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  position: relative;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  text-align: center;
+  color: #343a40;
+}
+
+.modal-content form .form-control,
+.modal-content form select {
+  margin-bottom: 15px;
+}
+
+.modal-content form button {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.modal-content form button:first-child {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.modal-content form button:last-child {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.modal-content form button:hover {
+  opacity: 0.9;
+}
+
+/* Error Message */
+.error-message {
+  color: #dc3545; /* Red color for errors */
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Responsive Modal */
+@media (max-width: 600px) {
+  .modal-content {
+    width: 95%;
+    max-width: 90%;
+    padding: 20px;
+  }
+}
+
+/* Close Button for Modal */
+.modal-content::before {
+  content: '×';
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #6c757d;
+}
+
+.modal-content::before:hover {
+  color: #343a40;
+}
+
+/* Spinner Overlay */
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000; /* Higher than modals */
+}
+
+/* Optional: Customize Notyf Notifications */
+.notyf__toast {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

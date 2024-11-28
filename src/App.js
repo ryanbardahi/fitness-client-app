@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Register from './components/Register';
+import Login from './components/Login';
+import Workouts from './components/Workouts';
+import PrivateRoute from './components/PrivateRoute';
+import NotFound from './components/NotFound';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="*" element={<NotFound />} />
+        {/* Root path now points to Login */}
+        <Route path="/" element={<Login />} />
+        {/* Explicitly defining /login for clarity and future scalability */}
+        <Route path="/login" element={<Login />} />
+        {/* Register route remains accessible via /register */}
+        <Route path="/register" element={<Register />} />
+        {/* Protected Workouts route */}
+        <Route
+          path="/workouts"
+          element={
+            <PrivateRoute>
+              <Workouts />
+            </PrivateRoute>
+          }
+        />
+        {/* Optional: Catch-all route for undefined paths */}
+        <Route path="*" element={<Login />} />
+      </Routes>
+    </Router>
   );
 }
 

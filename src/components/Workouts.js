@@ -1,9 +1,11 @@
+// src/components/Workouts.js
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import WorkoutCard from './WorkoutCard';
 import AddWorkoutModal from './AddWorkoutModal';
 import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css';
+import SpinnerOverlay from './SpinnerOverlay';
 
 function Workouts() {
   const [workouts, setWorkouts] = useState([]);
@@ -40,29 +42,17 @@ function Workouts() {
 
   useEffect(() => {
     fetchWorkouts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    notyf.success('Logged out successfully');
-    navigate('/login');
-  };
 
   return (
     <>
-      {loading && (
-        <div className="spinner-overlay">
-          <div className="spinner-border text-primary" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      )}
+      {loading && <SpinnerOverlay />}
       <div className="workouts-container">
         <h2>Your Workouts</h2>
         <div className="workouts-header">
-          <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
-          <button className="btn btn-success" onClick={() => setShowAddModal(true)}>Add Workout</button>
+          <button className="btn btn-success" onClick={() => setShowAddModal(true)}>
+            Add Workout
+          </button>
         </div>
         {showAddModal && <AddWorkoutModal onClose={() => setShowAddModal(false)} onAdd={fetchWorkouts} />}
         <div className="workouts-list">

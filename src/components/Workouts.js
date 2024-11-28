@@ -48,7 +48,7 @@ function Workouts() {
       <div className="workouts-container">
         <h2>Your Workouts</h2>
         <div className="workouts-header d-flex justify-content-center mb-4">
-          <button className="btn btn-success" onClick={() => setShowAddModal(true)}>
+          <button id="addWorkout" className="btn btn-success" onClick={() => setShowAddModal(true)}>
             Add Workout
           </button>
         </div>

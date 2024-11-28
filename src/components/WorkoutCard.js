@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import UpdateWorkoutModal from './UpdateWorkoutModal';
+import SpinnerOverlay from './SpinnerOverlay';
 import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css';
 
@@ -14,13 +15,16 @@ function WorkoutCard({ workout, onUpdate }) {
   const markAsComplete = async () => {
     setActionLoading(true);
     try {
-      const response = await fetch(`https://fitnessapi-6hld.onrender.com/workouts/completeWorkoutStatus/${workout._id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `https://fitnessapi-6hld.onrender.com/workouts/completeWorkoutStatus/${workout._id}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const data = await response.json();
 
@@ -43,13 +47,16 @@ function WorkoutCard({ workout, onUpdate }) {
 
     setActionLoading(true);
     try {
-      const response = await fetch(`https://fitnessapi-6hld.onrender.com/workouts/deleteWorkout/${workout._id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `https://fitnessapi-6hld.onrender.com/workouts/deleteWorkout/${workout._id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const data = await response.json();
 
@@ -77,46 +84,55 @@ function WorkoutCard({ workout, onUpdate }) {
 
   return (
     <>
-      {actionLoading && (
-        <div className="spinner-overlay">
-          <div className="spinner-border text-primary" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      )}
+      {actionLoading && <SpinnerOverlay />}
       <div className="workout-card">
         <h3>{workout.name}</h3>
-        <p><strong>Duration:</strong> {workout.duration}</p>
-        <p><strong>Date Added:</strong> {formattedDate}</p>
-        <p><strong>Status:</strong> {workout.status.charAt(0).toUpperCase() + workout.status.slice(1)}</p>
+        <p>
+          <strong>Duration:</strong> {workout.duration}
+        </p>
+        <p>
+          <strong>Date Added:</strong> {formattedDate}
+        </p>
+        <p>
+          <strong>Status:</strong>{' '}
+          {workout.status.charAt(0).toUpperCase() + workout.status.slice(1)}
+        </p>
         <div className="workout-card-buttons">
           {workout.status !== 'complete' && (
             <button
-              className="mark-complete"
+              className="mark-complete btn btn-success btn-sm"
               onClick={markAsComplete}
               disabled={actionLoading}
             >
               {actionLoading ? (
-                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                <span
+                  className="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
               ) : (
                 'Mark as Complete'
               )}
             </button>
           )}
           <button
-            className="edit"
+            className="edit btn btn-warning btn-sm"
             onClick={openEditModal}
             disabled={actionLoading}
           >
             Edit
           </button>
           <button
-            className="delete"
+            className="delete btn btn-danger btn-sm"
             onClick={deleteWorkout}
             disabled={actionLoading}
           >
             {actionLoading ? (
-              <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              <span
+                className="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
             ) : (
               'Delete'
             )}

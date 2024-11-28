@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css';
+import Modal from './Modal';
 
 function AddWorkoutModal({ onClose, onAdd }) {
   const [name, setName] = useState('');
@@ -17,7 +18,7 @@ function AddWorkoutModal({ onClose, onAdd }) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ name, duration }),
       });
@@ -26,8 +27,8 @@ function AddWorkoutModal({ onClose, onAdd }) {
 
       if (response.ok) {
         notyf.success('Workout added successfully');
-        onAdd();
-        onClose();
+        onAdd(); // Refresh the workouts list
+        onClose(); // Close the modal
       } else {
         notyf.error(data.error || 'Failed to add workout');
       }
@@ -40,7 +41,7 @@ function AddWorkoutModal({ onClose, onAdd }) {
   };
 
   return (
-    <>
+    <Modal onClose={onClose}>
       {loading && (
         <div className="spinner-overlay">
           <div className="spinner-border text-primary" role="status">
@@ -48,40 +49,44 @@ function AddWorkoutModal({ onClose, onAdd }) {
           </div>
         </div>
       )}
-      <div className="modal" onClick={onClose}>
-        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-          <h2>Add Workout</h2>
-          <form onSubmit={handleAddWorkout}>
-            <div className="mb-3">
-              <label htmlFor="workoutName" className="form-label">Name</label>
-              <input
-                type="text"
-                className="form-control"
-                id="workoutName"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                placeholder="Enter workout name"
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="duration" className="form-label">Duration</label>
-              <input
-                type="text"
-                className="form-control"
-                id="duration"
-                value={duration}
-                onChange={(e) => setDuration(e.target.value)}
-                required
-                placeholder="e.g., 30 minutes"
-              />
-            </div>
-            <button type="submit" className="btn btn-success">Add Workout</button>
-            <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>
-          </form>
+      <h2>Add Workout</h2>
+      <form onSubmit={handleAddWorkout}>
+        <div className="mb-3">
+          <label htmlFor="workoutName" className="form-label">
+            Name
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="workoutName"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            placeholder="Enter workout name"
+          />
         </div>
-      </div>
-    </>
+        <div className="mb-3">
+          <label htmlFor="duration" className="form-label">
+            Duration
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="duration"
+            value={duration}
+            onChange={(e) => setDuration(e.target.value)}
+            required
+            placeholder="e.g., 30 minutes"
+          />
+        </div>
+        <button type="submit" className="btn btn-success">
+          Add Workout
+        </button>
+        <button type="button" className="btn btn-secondary" onClick={onClose}>
+          Cancel
+        </button>
+      </form>
+    </Modal>
   );
 }
 

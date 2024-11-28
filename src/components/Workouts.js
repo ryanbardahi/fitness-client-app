@@ -1,6 +1,4 @@
-// src/components/Workouts.js
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import WorkoutCard from './WorkoutCard';
 import AddWorkoutModal from './AddWorkoutModal';
 import { Notyf } from 'notyf';
@@ -11,7 +9,6 @@ function Workouts() {
   const [workouts, setWorkouts] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const notyf = new Notyf();
 
   const fetchWorkouts = async () => {
@@ -21,7 +18,7 @@ function Workouts() {
       const response = await fetch('https://fitnessapi-6hld.onrender.com/workouts/getMyWorkouts', {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -42,6 +39,7 @@ function Workouts() {
 
   useEffect(() => {
     fetchWorkouts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -49,12 +47,17 @@ function Workouts() {
       {loading && <SpinnerOverlay />}
       <div className="workouts-container">
         <h2>Your Workouts</h2>
-        <div className="workouts-header">
+        <div className="workouts-header d-flex justify-content-center mb-4">
           <button className="btn btn-success" onClick={() => setShowAddModal(true)}>
             Add Workout
           </button>
         </div>
-        {showAddModal && <AddWorkoutModal onClose={() => setShowAddModal(false)} onAdd={fetchWorkouts} />}
+        {showAddModal && (
+          <AddWorkoutModal
+            onClose={() => setShowAddModal(false)}
+            onAdd={fetchWorkouts}
+          />
+        )}
         <div className="workouts-list">
           {workouts.length > 0 ? (
             workouts.map((workout) => (

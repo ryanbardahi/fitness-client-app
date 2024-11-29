@@ -27,8 +27,8 @@ function AddWorkoutModal({ onClose, onAdd }) {
 
       if (response.ok) {
         notyf.success('Workout added successfully');
-        onAdd(); // Refresh the workouts list
-        onClose(); // Close the modal
+        onAdd();
+        onClose();
       } else {
         notyf.error(data.error || 'Failed to add workout');
       }

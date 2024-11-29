@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css';
 
-function Login() {
+function Login({ setToken }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem('token', data.access);
+        setToken(data.access); // Update token in state
         notyf.success('Login successful!');
         navigate('/workouts');
       } else {

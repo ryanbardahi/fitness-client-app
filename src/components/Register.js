@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css';
 
-function Register() {
+function Register({ setToken }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -25,8 +25,9 @@ function Register() {
       const data = await response.json();
 
       if (response.ok) {
-        notyf.success('Registration successful! Please log in.');
-        navigate('/login');
+        setToken(data.access); // Update token in state
+        notyf.success('Registration successful!');
+        navigate('/workouts');
       } else {
         notyf.error(data.error || 'Registration failed');
       }
